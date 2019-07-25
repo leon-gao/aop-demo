@@ -45,7 +45,10 @@ public class LogAspect {
         } finally {
             try {
                 //方法执行完成后增加日志
-                addOperationLog(joinPoint,res,time);
+                for (int i = 0 ; i<5; i++) {
+                    addOperationLog(joinPoint,res,time);
+                }
+
             }catch (Exception e){
                 System.out.println("LogAspect 操作失败：" + e.getMessage());
                 e.printStackTrace();
@@ -112,7 +115,7 @@ public class LogAspect {
 
     @Before("operationLog()")
     public void doBeforeAdvice(JoinPoint joinPoint){
-        System.out.println("进入方法前执行.....");
+//        System.out.println("进入方法前执行.....");
 
     }
 
@@ -122,7 +125,7 @@ public class LogAspect {
      */
     @AfterReturning(returning = "ret", pointcut = "operationLog()")
     public void doAfterReturning(Object ret) {
-        System.out.println("方法的返回值 : " + ret);
+//        System.out.println("方法的返回值 : " + ret);
     }
 
     /**
@@ -139,7 +142,7 @@ public class LogAspect {
      */
     @After("operationLog()")
     public void after(JoinPoint jp){
-        System.out.println("方法最后执行.....");
+//        System.out.println("方法最后执行.....");
     }
 
 }
