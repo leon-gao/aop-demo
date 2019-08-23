@@ -1,4 +1,4 @@
-package com.gaolong.aopdemo.producer;
+package com.gaolong.working.producer;
 
 import com.gaolong.aopdemo.logs.OperationLog;
 import org.springframework.amqp.core.Message;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RabbitOrderSender {
+public class WorkSender {
     //自动注入RabbitTemplate模板类
     @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -49,14 +49,7 @@ public class RabbitOrderSender {
         rabbitTemplate.setConfirmCallback(confirmCallback);
         //消息唯一ID
         CorrelationData correlationData = new CorrelationData(operationLog.getId());
-
-
-        operationLog.setDescribe("这个是第一个交换机--first-exchange--");
-        rabbitTemplate.convertAndSend("order-exchange", "order.ABC", operationLog, correlationData);
-
-//         第二个交换机
-        operationLog.setDescribe("这个是第二个交换机--second-exchange--");
-        rabbitTemplate.convertAndSend("second-exchange", "order.second", operationLog, correlationData);
+        rabbitTemplate.convertAndSend("work-exchange", "work.ABC", operationLog, correlationData);
     }
 }
 

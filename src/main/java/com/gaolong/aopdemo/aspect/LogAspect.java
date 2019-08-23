@@ -45,9 +45,9 @@ public class LogAspect {
         } finally {
             try {
                 //方法执行完成后增加日志
-                for (int i = 0 ; i<5; i++) {
+//                for (int i = 0 ; i<10; i++) {
                     addOperationLog(joinPoint,res,time);
-                }
+//                }
 
             }catch (Exception e){
                 System.out.println("LogAspect 操作失败：" + e.getMessage());

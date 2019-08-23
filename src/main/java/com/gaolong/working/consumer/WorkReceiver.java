@@ -1,4 +1,4 @@
-package com.gaolong.aopdemo.consumer;
+package com.gaolong.working.consumer;
 
 import com.gaolong.aopdemo.logs.OperationLog;
 import com.rabbitmq.client.Channel;
@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Component
-public class OrderReceiver {
+public class WorkReceiver {
 
 
     @Autowired
@@ -27,16 +27,16 @@ public class OrderReceiver {
 
     //配置监听的哪一个队列，同时在没有queue和exchange的情况下会去创建并建立绑定关系
     @RabbitListener(bindings = {
-            @QueueBinding(
-            value = @Queue(value = "order-queue",durable = "true"),//arguments = @Argument(name = "x-message-ttl", value = "5000", type = "java.lang.Integer"),
-            exchange = @Exchange(name="order-exchange",durable = "true",type = ExchangeTypes.FANOUT)
-            ,key = "order.*"),
-            @QueueBinding(
-                    value = @Queue(value = "order-queue",durable = "true"),//arguments = @Argument(name = "x-message-ttl", value = "5000", type = "java.lang.Integer"),
-                    exchange = @Exchange(name="second-exchange",durable = "true",type = ExchangeTypes.FANOUT)
-                    ,key = "order.*")
-        }
-    )
+        @QueueBinding(
+        value = @Queue(value = "work-queue",durable = "true"),//arguments = @Argument(name = "x-message-ttl", value = "5000", type = "java.lang.Integer"),
+        exchange = @Exchange(name="order-exchange",durable = "true",type = ExchangeTypes.FANOUT)
+        ,key = "order.*"
+        ),
+        @QueueBinding(
+        value = @Queue(value = "work-queue",durable = "true"),//arguments = @Argument(name = "x-message-ttl", value = "5000", type = "java.lang.Integer"),
+        exchange = @Exchange(name="second-exchange",durable = "true",type = ExchangeTypes.FANOUT)
+        ,key = "order.*")
+    })
     @RabbitHandler//如果有消息过来，在消费的时候调用这个方法
     public void onOrderMessage(@Payload OperationLog operationLog, @Headers Map<String,Object> headers, Channel channel) throws IOException, InterruptedException {
 
@@ -116,8 +116,7 @@ public class OrderReceiver {
 //
 //            }
 
-            System.out.println(operationLog.getDescribe());
-            System.out.println("---------消费End---------，我是order消费者 msg="+operationLog.getDescribe());
+            System.out.println("---------消费End---------，我是work消费者, msg="+operationLog.getDescribe());
 
 //            System.out.println("sleep 5s");
 //            Thread.sleep(5000);

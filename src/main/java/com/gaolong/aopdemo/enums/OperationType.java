@@ -9,7 +9,11 @@ public enum OperationType {
     DELETE("delete"),
     SELECT("select"),
     UPDATE("update"),
-    INSERT("insert");
+    INSERT("insert"),
+
+    MEETING("meeting"),
+    MESSAGE("message"),
+    VOCATION("vocation");
 
     private String value;
 
